@@ -1,127 +1,70 @@
-import time
-import csv
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from bs4 import BeautifulSoup
+import requests
 import json
 
-user_cards = []
 
+continuation_token = 'AQHRAMHEccutHDuPMJxtDRvJt05VL6r1MqSUTkocPE_m6Pl3Y2_CEeRk0a41nowaB08ld0BBi5lFSndtC47COttIRw'
+while True:
+    if not continuation_token:
+        break
 
-class FacebookScraper:
-    def __init__(self):
-        chrome_options = Options()
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--disable-dev-shm-usage')
-        chrome_options.add_argument("start-maximized")
-        chrome_options.add_argument('--blink-settings=imagesEnabled=false')
-        self.driver = webdriver.Chrome(options=chrome_options)
+    url = "https://www.facebook.com/api/graphql"
 
-    def login_with_cookies(self, cookies):
-        self.driver.get("https://www.facebook.com")
-        for cookie in cookies:
-            self.driver.add_cookie(cookie)
+    payload = f"av=61550964032031&__user=61550964032031&__a=1&__req=k&__hs=19616.HYP%3Acomet_pkg.2.1..2.1&dpr=1&__ccg=EXCELLENT&__rev=1008680585&__s=8vhme0%3Aykbpg3%3A6y90mr&__hsi=7279306350893877912&__dyn=7AzHxqUW13xt0mUyEqxenFwLBwopU98nwgUao4u5QdwSxucyUco5S3O2Saw8i2S1DwUx60DU1LVEtwMw65xO2OU7m2210wEwgolzUO0n24oaEd82lwv89kbxS2218wc61awkovwRwlE-U2exi4UaEW2au1jxS6FobrwKxm5oe8cEW4-5pUfEe872m7-8wywdG7FobpEbUGdG0HE88cA0z8c84q58jwTwNxe6Uak1xwJwxyo6J0qo4e16wWw&__csr=gL6OY5Ij7QBkZmDNad6tkAzbd9svmQyn9blPr-KIKGbSQDqHiLlltOIAyBBJeB8QiiXTHy7V9kAp9pSXy94HABt4LjgKu9yoC-nx2eQ-9XylGp6iK4oO8gyJBpGx2q_yF8xQlACHy8y4UOEhgkJ28KHByF9-8o8Ey4ooy7BAKdxyaCzogiUKV8sxe64FeAh2EaQ3m2u48sG489oW224bwFAgnx648O8wLoN1Sp1C4rKdGdzU8o8ocA1cgmx25FoW9K2O2yfggBwaa4u13wyyp8hg9o4vDxi2q6o9UG7po5idwjEK6k0zE2Myo0jAzE0cdE0d2Q01Tgw0V_AwtE0odw66we6li08C0s6exm0i10c28zo1kQ4E2Kw0zUwio0isg3qw12S8805fo0Lq1tuGJ2qa1nhA0alg0nJGbw3EE1OU1eE-0vG0nWmUy-0km0n21tg1xE72h02vE0H6&__comet_req=15&fb_dtsg=NAcMfRlFT30RjNolGKsPL08ZuUhwiTMFKyc-GF7tk165Lm0xUePm7aA%3A1%3A1694837991&jazoest=25283&lsd=o14SfsWwAFkZwkt2X2BmhU&__spin_r=1008680585&__spin_b=trunk&__spin_t=1694845583&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometAppCollectionListRendererPaginationQuery&variables=%7B%22count%22%3A8%2C%22cursor%22%3A%22{continuation_token}%22%2C%22scale%22%3A1%2C%22search%22%3Anull%2C%22id%22%3A%22YXBwX2NvbGxlY3Rpb246NjE1NTA5NjQwMzIwMzE6MjM1NjMxODM0OTozMg%3D%3D%22%7D&server_timestamps=true&doc_id=6515974468471236"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0",
+        "Accept": "*/*",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-FB-Friendly-Name": "ProfileCometAppCollectionListRendererPaginationQuery",
+        "X-FB-LSD": "MHboR96SH5lRnMHehAuf6s",
+        "X-ASBD-ID": "129477",
+        "Origin": "https://www.facebook.com",
+        "Alt-Used": "www.facebook.com",
+        "Connection": "keep-alive",
+        "Referer": "https://www.facebook.com/profile.php?id=61550964032031&sk=followers",
+        "Cookie": "fr=0Qi6cPlzNRwzbd1hp.AWXTYiVFKgORdivio6iHJfwc82Y.BlCEX3.YI.AAA.0.0.BlCEYP.AWVMXWPjoK0; sb=o2kBZecPI7AgppvB2y-BFsQm; wd=1040x729; c_user=100094654806004; xs=1%3A6-kmqmL0FZZyvQ%3A2%3A1694837991%3A-1%3A-1%3A%3AAcUWJ-z16ZsBuBrEayH95Omz9pGCJ5dCYi7hE2yqzg; datr=6ywFZdYmnpOpCywn7oqR5-ND; dpr=0.8955223880597015; i_user=61550964032031",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+        "TE": "trailers"
+    }
 
-    def scroll_to_bottom(self, scroll_amount=100000):
-        global user_cards
+    response = requests.request("POST", url, data=payload, headers=headers)
+    response = response.json()
+    if response['data']['node']['pageItems']['page_info']['has_next_page']:
+        continuation_token = response['data']['node']['pageItems']['page_info']['end_cursor']
+    else:
+        continuation_token = None
 
-        current_iter = 0
-        last_height = self.driver.execute_script("return document.body.scrollHeight")
-        retry = 0
-        while True:
-            user_cards = self.scrape_user_cards()
-            print(len(user_cards))
-            print(f'Current iteration - {current_iter}')
-            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight + 1000);")
-            time.sleep(2)
-            new_height = self.driver.execute_script("return document.body.scrollHeight")
-            if new_height == last_height:
-                print(f'trying again {retry}/10')
-                retry += 1
-                if retry >= 10:
-                    break
-                continue
+    profiles = response['data']['node']['pageItems']['edges']
 
-            if scroll_amount < current_iter:
-                break
-
-            last_height = new_height
-            current_iter += 1
-            retry = 0
-
-    def scrape_user_cards(self):
-        # Get the page source using Selenium
-        page_source = self.driver.page_source
-
-        # Parse the page source with BeautifulSoup
-        soup = BeautifulSoup(page_source, 'html.parser')
-
-        # Find user card elements using bs4 (adjust the selector as needed)
-        user_card_elements = soup.find_all('div',
-                                           class_='x6s0dn4 x1lq5wgf xgqcy7u x30kzoy x9jhf4c x1olyfxc x9f619 x78zum5 x1e56ztr x1gefphp x1y1aw1k x1sxyh0 xwib8y2 xurb0ha')
-
-        new_elements = []
-        for element in user_card_elements:
-            new_el = {}
-            # Extract the username and bio from the user card element
-            username_bio_text = element.text.split('\n')
-            new_el['Username'] = username_bio_text[0] if len(username_bio_text) > 0 else 'n/a'
-            new_el['Bio'] = username_bio_text[1] if len(username_bio_text) > 1 else 'n/a'
-
-            new_el['Link to Profile'] = element.find('a', href=True)['href']
-            new_el['Image'] = element.find('img', src=True)['src']
-            new_elements.append(new_el)
-
-        return new_elements
-
-    def export_to_csv(self, data):
-        with open('facebook_users.csv', 'w', newline='', encoding='utf-8') as csvfile:
-            fieldnames = ['Image', 'Username', 'Bio', 'Link to Profile']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            for user in data:
-                writer.writerow(user)
-
-    def run(self, cookies):
-        self.login_with_cookies(cookies)
-        time.sleep(5)  # Wait for the page to load
-        self.driver.get('https://www.facebook.com/profile.php?id=61550964032031&sk=followers')
-        time.sleep(5)
-        self.scroll_to_bottom()
-        user_data = self.scrape_user_cards()
-        self.export_to_csv(user_data)
-        self.driver.quit()
-
-
-if __name__ == "__main__":
-    # Setup Cookies
+    existing_data = []
     try:
-        cookies = [
-            {"name": "datr", "value": "o2kBZfAJDj3PI93UBZlWDcoJ", "domain": ".facebook.com", "path": "/",
-             "secure": True, "httpOnly": True},
-            {"name": "sb", "value": "o2kBZecPI7AgppvB2y-BFsQm", "domain": ".facebook.com", "path": "/", "secure": True,
-             "httpOnly": True},
-            {"name": "c_user", "value": "100094654806004", "domain": ".facebook.com", "path": "/", "secure": True,
-             "httpOnly": True},
-            {"name": "xs",
-             "value": "38%3Ad7hehynSKNOklg%3A2%3A1694591417%3A-1%3A-1%3A%3AAcUjkD7Ost4cL3Tl7PQaZ3MJmBUDgTMXKW7QegKM2A",
-             "domain": ".facebook.com", "path": "/", "secure": True, "httpOnly": True},
-            {"name": "fr",
-             "value": "0gKgyTQA7qcJvzlcM.AWVW7DC_27HV7JmA3kPLV-03VxY.BlA-zh.XU.AAA.0.0.BlA-zh.AWV1JOQAJXc",
-             "domain": ".facebook.com", "path": "/", "secure": True, "httpOnly": True},
-            {"name": "i_user", "value": "61550964032031", "domain": ".facebook.com", "path": "/", "secure": True,
-             "httpOnly": True},
-            {"name": "dpr", "value": "0.8955223880597015", "domain": ".facebook.com", "path": "/", "secure": True,
-             "httpOnly": True},
-            {"name": "wd", "value": "834x718", "domain": ".facebook.com", "path": "/", "secure": True, "httpOnly": True}
-            # Add more cookies here if needed
-        ]
+        with open('output.json', 'r', encoding='utf-8') as file:
+            existing_data = json.load(file)
+    except FileNotFoundError:
+        existing_data = []
 
-        scraper = FacebookScraper()
-        scraper.run(cookies)
+    # Process the new profiles and append them to the existing data
+    new_data = []
+    if 'data' in response and 'node' in response['data'] and 'pageItems' in response['data']['node']:
+        profiles = response['data']['node']['pageItems']['edges']
+        for profile in profiles:
+            profile = profile['node']
+            image = profile['image']['uri']
+            title = profile['title']['text']
+            subtitle_text = profile['subtitle_text'].get('text', 'n/a')
+            url = profile['url']
 
-    except:
-        with open('inspect.json', 'w') as f:
-            json.dump(user_cards, open('test.json', 'a+'), indent=4)
+            data = {'image': image, 'title': title, 'subtitle_text': subtitle_text, 'url': url}
+            new_data.append(data)
+        print(f"Added Profile {len(new_data)} - {title}")
+    # Append the new data to the existing data
+    existing_data.extend(new_data)
+
+    # Write the updated data back to the JSON file
+    with open('run_1.json', 'w', encoding='utf-8') as file:
+        json.dump(existing_data, file, ensure_ascii=False, indent=4)
+
+    print(continuation_token)
