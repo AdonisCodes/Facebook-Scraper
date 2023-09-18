@@ -2,7 +2,7 @@ import requests
 import json
 
 
-continuation_token = 'AQHR25K_GhGUScbiOmh7IRittu6NcfqXA_yX85vhiTVXN1MC9CiyM8PgwGw_yW_usvFBylzILJnt05wgS4M1WavZWQ'
+continuation_token = 'AQHRAMHEccutHDuPMJxtDRvJt05VL6r1MqSUTkocPE_m6Pl3Y2_CEeRk0a41nowaB08ld0BBi5lFSndtC47COttIRw'
 while True:
     if not continuation_token:
         break
@@ -17,13 +17,13 @@ while True:
         "Accept-Encoding": "gzip, deflate, br",
         "Content-Type": "application/x-www-form-urlencoded",
         "X-FB-Friendly-Name": "ProfileCometAppCollectionListRendererPaginationQuery",
-        "X-FB-LSD": "o14SfsWwAFkZwkt2X2BmhU",
+        "X-FB-LSD": "MHboR96SH5lRnMHehAuf6s",
         "X-ASBD-ID": "129477",
         "Origin": "https://www.facebook.com",
         "Alt-Used": "www.facebook.com",
         "Connection": "keep-alive",
         "Referer": "https://www.facebook.com/profile.php?id=61550964032031&sk=followers",
-        "Cookie": "fr=0B2WXReqCDR6xBLnT.AWV1jNuGygttHqSdT2wg99emT7s.BlBUot.YI.AAA.0.0.BlBUot.AWWyamfk5zw; sb=o2kBZecPI7AgppvB2y-BFsQm; wd=854x672; c_user=100094654806004; xs=1%3A6-kmqmL0FZZyvQ%3A2%3A1694837991%3A-1%3A-1%3A%3AAcVECxhHvsfEqPBZhi_779put4UB_RKTB4KPs7VVVQ; datr=6ywFZdYmnpOpCywn7oqR5-ND; usida=eyJ2ZXIiOjEsImlkIjoiQXMxMmJkbTFqa2l3NjEiLCJ0aW1lIjoxNjk0ODQwOTExfQ%3D%3D; dpr=0.8955223880597015; i_user=61550964032031",
+        "Cookie": "fr=0Qi6cPlzNRwzbd1hp.AWXTYiVFKgORdivio6iHJfwc82Y.BlCEX3.YI.AAA.0.0.BlCEYP.AWVMXWPjoK0; sb=o2kBZecPI7AgppvB2y-BFsQm; wd=1040x729; c_user=100094654806004; xs=1%3A6-kmqmL0FZZyvQ%3A2%3A1694837991%3A-1%3A-1%3A%3AAcUWJ-z16ZsBuBrEayH95Omz9pGCJ5dCYi7hE2yqzg; datr=6ywFZdYmnpOpCywn7oqR5-ND; dpr=0.8955223880597015; i_user=61550964032031",
         "Sec-Fetch-Dest": "empty",
         "Sec-Fetch-Mode": "cors",
         "Sec-Fetch-Site": "same-origin",
@@ -41,7 +41,7 @@ while True:
 
     existing_data = []
     try:
-        with open('a.json', 'r', encoding='utf-8') as file:
+        with open('output.json', 'r', encoding='utf-8') as file:
             existing_data = json.load(file)
     except FileNotFoundError:
         existing_data = []
