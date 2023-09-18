@@ -7,7 +7,7 @@ while True:
     if not continuation_token:
         break
 
-    url = "https://www.facebook.com/api/graphql"
+    url = 'ttps://www.facebook.com/api/graphql'
 
     payload = f"av=61550964032031&__user=61550964032031&__a=1&__req=k&__hs=19616.HYP%3Acomet_pkg.2.1..2.1&dpr=1&__ccg=EXCELLENT&__rev=1008680585&__s=8vhme0%3Aykbpg3%3A6y90mr&__hsi=7279306350893877912&__dyn=7AzHxqUW13xt0mUyEqxenFwLBwopU98nwgUao4u5QdwSxucyUco5S3O2Saw8i2S1DwUx60DU1LVEtwMw65xO2OU7m2210wEwgolzUO0n24oaEd82lwv89kbxS2218wc61awkovwRwlE-U2exi4UaEW2au1jxS6FobrwKxm5oe8cEW4-5pUfEe872m7-8wywdG7FobpEbUGdG0HE88cA0z8c84q58jwTwNxe6Uak1xwJwxyo6J0qo4e16wWw&__csr=gL6OY5Ij7QBkZmDNad6tkAzbd9svmQyn9blPr-KIKGbSQDqHiLlltOIAyBBJeB8QiiXTHy7V9kAp9pSXy94HABt4LjgKu9yoC-nx2eQ-9XylGp6iK4oO8gyJBpGx2q_yF8xQlACHy8y4UOEhgkJ28KHByF9-8o8Ey4ooy7BAKdxyaCzogiUKV8sxe64FeAh2EaQ3m2u48sG489oW224bwFAgnx648O8wLoN1Sp1C4rKdGdzU8o8ocA1cgmx25FoW9K2O2yfggBwaa4u13wyyp8hg9o4vDxi2q6o9UG7po5idwjEK6k0zE2Myo0jAzE0cdE0d2Q01Tgw0V_AwtE0odw66we6li08C0s6exm0i10c28zo1kQ4E2Kw0zUwio0isg3qw12S8805fo0Lq1tuGJ2qa1nhA0alg0nJGbw3EE1OU1eE-0vG0nWmUy-0km0n21tg1xE72h02vE0H6&__comet_req=15&fb_dtsg=NAcMfRlFT30RjNolGKsPL08ZuUhwiTMFKyc-GF7tk165Lm0xUePm7aA%3A1%3A1694837991&jazoest=25283&lsd=o14SfsWwAFkZwkt2X2BmhU&__spin_r=1008680585&__spin_b=trunk&__spin_t=1694845583&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometAppCollectionListRendererPaginationQuery&variables=%7B%22count%22%3A8%2C%22cursor%22%3A%22{continuation_token}%22%2C%22scale%22%3A1%2C%22search%22%3Anull%2C%22id%22%3A%22YXBwX2NvbGxlY3Rpb246NjE1NTA5NjQwMzIwMzE6MjM1NjMxODM0OTozMg%3D%3D%22%7D&server_timestamps=true&doc_id=6515974468471236"
     headers = {
